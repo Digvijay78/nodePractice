@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello world</title>
+  </head>
+  <!-- We now have to include the client script and initialize the socket object there, -->
+  <!-- so that clients can establish connections when required.
+The script is served by our io server at '/socket.io/socket.io.js'. -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+    socket.on("message", (data) => {
+      document.write(data);
+    });
+  </script>
+  <body>
+    Hello world
+  </body>
+</html>

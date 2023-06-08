@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Support Page</title>
+</head>
+<body>
+  <h1>Support</h1>
+  <div id="chat-box"></div>
+  <form id="chat-form">
+    <input type="text" id="message-input" autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const chatBox = document.getElementById('chat-box');
+    const chatForm = document.getElementById('chat-form');
+    const messageInput = document.getElementById('message-input');
+    socket.on('chat message', (msg) => {
+      const message = document.createElement('p');
+      message.textContent = msg;
+      chatBox.appendChild(message);
+    });
+    chatForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const message = messageInput.value;
+      const messageElement = document.createElement('p');
+      messageElement.textContent = message;
+      chatBox.appendChild(messageElement);
+      socket.emit('chat message', message);
+      messageInput.value = '';
+    });
+    socket.emit('chat message', 'Hi, How can I Can Help You?');
+  </script>
+</body>
+</html>
